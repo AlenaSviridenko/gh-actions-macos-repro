@@ -2,9 +2,9 @@ trigger:
 - master
 
 jobs: 
-- job: 'TestUbuntu'
+- job: 'TestCatalina'
   pool: 
-    vmImage: 'ubuntu-latest'
+    vmImage: 'macos-latest'
   strategy:
     matrix:
       browser: 
