@@ -2,13 +2,13 @@ trigger:
 - master
 
 jobs: 
-- job: 'TestCatalina'
+- job: 'TestUbuntu'
   pool: 
-    vmImage: 'macos-latest'
+    vmImage: 'ubuntu-latest'
   strategy:
     matrix:
       browser: 
-        version: 'safari'
+        version: 'chrome'
   steps:
     - task: NodeTool@0
       displayName: 'Use Node 10.x'
