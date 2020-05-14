@@ -2,9 +2,35 @@ trigger:
 - master
 
 jobs: 
-- job: 'TestMojave'
+- job: 'TestCatalina'
   pool: 
     vmImage: 'macos-latest'
+  strategy:
+    matrix:
+      browser: 
+        version: 'safari'
+  steps:
+    - task: NodeTool@0
+      displayName: 'Use Node 10.x'
+      inputs:
+        versionSpec: 10.x
+        checkLatest: true
+    - bash: |
+        yarn install
+      displayName: 'YARN install'
+    - bash: |
+        yarn lint:js
+      displayName: 'eslint'
+    - bash: |
+        yarn lint:hbs
+      displayName: 'template lint'
+    - bash: |
+        yarn test:ember --host 127.0.0.1 --launch $(version) 
+      displayName: 'integration tests'
+
+- job: 'TestMojave'
+  pool: 
+    vmImage: 'macOS-10.14'
   strategy:
     matrix:
       browser: 
