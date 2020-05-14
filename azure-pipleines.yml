@@ -2,14 +2,13 @@ trigger:
 - master
 
 jobs: 
-- job: 'Test Mojave'
+- job: 'TestMojave'
   pool: 'Hosted macOS Mojave'
   strategy:
     matrix:
-      browser: [
-          'safari'
-        ]
-    steps:
+      browser: 
+        version: 'safari'
+  steps:
     - task: NodeTool@0
       displayName: 'Use Node 10.x'
       inputs:
@@ -17,17 +16,13 @@ jobs:
         checkLatest: true
     - bash: |
         yarn install
-      workingDirectory: $(System.DefaultWorkingDirectory)
       displayName: 'YARN install'
     - bash: |
         yarn lint:js
-      workingDirectory: $(System.DefaultWorkingDirectory)
       displayName: 'eslint'
     - bash: |
         yarn lint:hbs
-      workingDirectory: $(System.DefaultWorkingDirectory)
       displayName: 'template lint'
     - bash: |
-        yarn test:ember --host 127.0.0.1 --launch ${{ matrix.browser }}      
-      workingDirectory: $(System.DefaultWorkingDirectory)
+        yarn test:ember --host 127.0.0.1 --launch ${{ version }} 
       displayName: 'integration tests'
