@@ -1,6 +1,9 @@
 trigger:
 - master
 
+variables:
+  CI: true
+
 jobs: 
 - job: 'TestCatalina'
   pool: 
