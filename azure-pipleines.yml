@@ -1,9 +1,6 @@
 trigger:
 - master
 
-variables:
-  CI: true
-
 jobs: 
 - job: 'TestCatalina'
   pool: 
@@ -27,6 +24,8 @@ jobs:
     - bash: |
         yarn lint:hbs
       displayName: 'template lint'
+    - bash: |
+        echo "##vso[task.setvariable variable=CI]true"
     - bash: |
         yarn test:ember --host 127.0.0.1 --launch $(version) 
       displayName: 'integration tests'
@@ -53,6 +52,8 @@ jobs:
     - bash: |
         yarn lint:hbs
       displayName: 'template lint'
+    - bash: |
+        echo "##vso[task.setvariable variable=CI]true"
     - bash: |
         yarn test:ember --host 127.0.0.1 --launch $(version) 
       displayName: 'integration tests'
