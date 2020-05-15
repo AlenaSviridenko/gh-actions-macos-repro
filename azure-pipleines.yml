@@ -28,10 +28,31 @@ jobs:
         yarn lint:hbs
       displayName: 'template lint'
     - bash: |
-        defaults write com.apple.Safari IncludeDevelopMenu YES
-        defaults write com.apple.Safari AllowRemoteAutomation 1
-        sudo safaridriver --enable
-        safaridriver -p 0 &
+        yarn test:ember --host 127.0.0.1 --launch $(version) 
+      displayName: 'integration tests'
+
+- job: 'TestMojave'
+  pool: 
+    vmImage: 'macOS-10.14'
+  strategy:
+    matrix:
+      browser: 
+        version: 'safari'
+  steps:
+    - task: NodeTool@0
+      displayName: 'Use Node 10.x'
+      inputs:
+        versionSpec: 10.x
+        checkLatest: true
     - bash: |
-        yarn test:ember --host 127.0.0.1 --launch $(version)
+        yarn install
+      displayName: 'YARN install'
+    - bash: |
+        yarn lint:js
+      displayName: 'eslint'
+    - bash: |
+        yarn lint:hbs
+      displayName: 'template lint'
+    - bash: |
+        yarn test:ember --host 127.0.0.1 --launch $(version) 
       displayName: 'integration tests'
