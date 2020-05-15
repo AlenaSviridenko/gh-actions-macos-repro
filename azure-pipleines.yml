@@ -28,7 +28,12 @@ jobs:
         yarn lint:hbs
       displayName: 'template lint'
     - bash: |
-        yarn test:ember --host 127.0.0.1 --launch $(version) 
+        defaults write com.apple.Safari IncludeDevelopMenu YES
+        defaults write com.apple.Safari AllowRemoteAutomation 1
+        sudo safaridriver --enable
+        safaridriver -p 0 &
+    - bash: |
+        yarn test:ember --host 127.0.0.1 --launch $(version)
       displayName: 'integration tests'
 
 - job: 'TestMojave'
@@ -53,6 +58,11 @@ jobs:
     - bash: |
         yarn lint:hbs
       displayName: 'template lint'
+    - bash: |
+        defaults write com.apple.Safari IncludeDevelopMenu YES
+        defaults write com.apple.Safari AllowRemoteAutomation 1
+        sudo safaridriver --enable
+        safaridriver -p 0 &
     - bash: |
         yarn test:ember --host 127.0.0.1 --launch $(version) 
       displayName: 'integration tests'
