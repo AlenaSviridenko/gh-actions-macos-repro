@@ -33,7 +33,7 @@ jobs:
         sudo safaridriver --enable
         safaridriver -p 0 &
     - bash: |
-        yarn test:ember --host 127.0.0.1 --launch $(version)
+        sudo yarn test:ember --host 127.0.0.1 --launch $(version)
       displayName: 'integration tests'
 
 - job: 'TestMojave'
